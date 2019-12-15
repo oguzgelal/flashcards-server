@@ -1,0 +1,19 @@
+{
+  "rules": {
+    "users": {
+      "$uid": {
+        ".write": "$uid === auth.uid",
+        ".read": "$uid === auth.uid",
+        "sessions": {
+          ".write": "root.child('users').child(auth.uid).child('sessions').val().length < 3"
+        }
+      }
+    },
+    "sessions": {
+      "$uid": {
+        ".write": "$uid === auth.uid",
+        ".read": "$uid === auth.uid",
+      }
+    }
+  }
+}
