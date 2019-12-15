@@ -4,12 +4,22 @@
       "$uid": {
         ".write": "$uid === auth.uid",
         ".read": "$uid === auth.uid",
+
+				// limit number of sessions for each user
+        "sessions": {
+          ".validate": "root.child('users').child(auth.uid).child('session_count').val() < 3",
+        },
       }
     },
     "sessions": {
       "$uid": {
         ".write": "$uid === auth.uid",
         ".read": "$uid === auth.uid",
+
+        "$sid": {
+         	// only allow writes here if it exists under user
+        	".validate": "root.child('users').child(auth.uid).child('sessions').hasChild($sid)"
+        }
       }
     }
   }
